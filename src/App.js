@@ -1,25 +1,92 @@
-import logo from './logo.svg';
-import './App.css';
+import "./styles.css";
+import React, { useState } from "react";
+import ReactModal from "react-modal";
 
-function App() {
+ReactModal.setAppElement("#root");
+
+const marked = require("marked");
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <MarkdownPreviewFunc />
     </div>
   );
-}
+};
 
 export default App;
+
+const MarkdownPreviewFunc = () => {
+  const [markdown, setMarkdown] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  function updateBox(markdown) {
+    setMarkdown(markdown);
+  }
+
+  function handleModalClose() {
+    setModalIsOpen({ modalIsOpen: false });
+  }
+
+  function handleClick() {
+    setModalIsOpen({ modalIsOpen: true });
+  }
+
+  function updateMarkdown(markdown) {
+    setMarkdown(markdown);
+  }
+
+  return (
+    <div className="first">
+      <div className="content-wrapper">
+        <ReactModal
+          isOpen={modalIsOpen.modalIsOpen}
+          handleModalClose={handleModalClose}
+          onRequestClose={() => {
+            handleModalClose();
+          }}
+          updateBox={updateBox}
+        >
+          <textarea
+            className="modalStyles"
+            onChange={(e) => {
+              updateMarkdown(e.target.value);
+            }}
+            value={markdown}
+          >
+            {markdown}
+          </textarea>
+        </ReactModal>
+        <div className="new-blog-link">
+          <button onClick={handleClick}>OpenModal!</button>
+        </div>
+        <div className="title">
+          <h1>Markdown Previewer</h1>
+        </div>
+        <div className="box-wrappers">
+          <div className="bothTAreaNPreview">
+            <div>
+              <textarea
+                className="thisIsWhereTheTextGoes"
+                onChange={(e) => {
+                  updateMarkdown(e.target.value);
+                }}
+                value={markdown}
+              >
+                {updateMarkdown}
+              </textarea>
+            </div>
+            <div className="previous">
+              <div
+                className="preview"
+                dangerouslySetInnerHTML={{
+                  __html: marked(`${markdown}`),
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

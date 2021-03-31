@@ -1,0 +1,36 @@
+.first {
+  margin: 0;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+}
+
+.box-wrappers {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.bothTAreaNPreview {
+  display: grid;
+  grid-gap: 100px;
+  grid-template-columns: 1fr 1fr;
+}
+.thisIsWhereTheTextGoes {
+  width: 35vw;
+  height: 70vh;
+  min-width: 300px;
+}
+
+.previous {
+  background-color: #9ca9b8;
+  word-wrap: break-word;
+}
+
+.modalStyles {
+  width: 99%;
+  height: 81vh;
+}
