@@ -1,6 +1,12 @@
 import "./styles.css";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import ReactModal from "react-modal";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faExpandArrowsAlt, faCopy } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faExpandArrowsAlt, faCopy);
 
 ReactModal.setAppElement("#root");
 
@@ -19,6 +25,16 @@ export default App;
 const MarkdownPreviewFunc = () => {
   const [markdown, setMarkdown] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [copySuccess, setCopySuccess] = useState("");
+
+  const textAreaRef = useRef(null);
+
+  function copyToClipBoard(e) {
+    textAreaRef.current.select();
+    document.execCommand("Copy");
+    e.target.focus();
+    setCopySuccess("Copied!");
+  }
 
   function updateBox(markdown) {
     setMarkdown(markdown);
@@ -57,9 +73,7 @@ const MarkdownPreviewFunc = () => {
             {markdown}
           </textarea>
         </ReactModal>
-        <div className="new-blog-link">
-          <button onClick={handleClick}>OpenModal!</button>
-        </div>
+
         <div className="title">
           <h1>Markdown Previewer</h1>
         </div>
@@ -72,9 +86,19 @@ const MarkdownPreviewFunc = () => {
                   updateMarkdown(e.target.value);
                 }}
                 value={markdown}
+                ref={textAreaRef}
               >
                 {updateMarkdown}
               </textarea>
+              <div className="expandArrows">
+                <div onClick={handleClick}>
+                  <FontAwesomeIcon icon="expand-arrows-alt" />
+                </div>
+              </div>
+              <div className="copyTo" onClick={copyToClipBoard}>
+                <FontAwesomeIcon icon="copy" />
+              </div>
+              {copySuccess}
             </div>
             <div className="previous">
               <div

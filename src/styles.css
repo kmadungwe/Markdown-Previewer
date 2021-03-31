@@ -23,11 +23,37 @@
   width: 35vw;
   height: 70vh;
   min-width: 300px;
+  border: 2px solid #9ca9b8;
 }
 
 .previous {
   background-color: #9ca9b8;
+  padding-left: 5px;
   word-wrap: break-word;
+  width: 35vw;
+}
+
+.expandArrows {
+  position: fixed;
+  bottom: 25px;
+  font-size: 2em;
+  cursor: pointer;
+  color: #9ca9b8;
+  transition: 0.5s ease-in-out;
+  padding-left: 5px;
+}
+.expandArrows :hover {
+  color: #969696;
+}
+
+.copyTo {
+  position: fixed;
+  right: 55%;
+  bottom: 25px;
+  font-size: 2em;
+  cursor: pointer;
+  color: #9ca9b8;
+  transition: 0.5s ease-in-out;
 }
 
 .modalStyles {
